@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="cartStyle.css">
+</head>
+<body>
+<section class="home">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid nav-div mx-auto">
+        <a class="navbar-brand" href="#">
+          <img src="https://img.freepik.com/premium-vector/ecommerce-logo-template-design-online-shopping-logo_622874-6.jpg" style="width: 30px; border-radius: 100%;" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto nav-ul">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#products">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cart.html">Cart</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <a class="navbar-brand" href="#">
+          <img src="Ab+, NSS.png" style="width: 35px; border-radius: 100%;" alt="">
+          <span style="text-align: center; margin-top: 5px;">Tony</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="txt container-fluid" style="z-index: 1;"> 
+      <h3>SHOPPING CART</h3>
+    </div>
+</section>
+
+<!-- Cart Items Section -->
+<div class="container">
+  <h1>Cart Items</h1>
+  <ul id="cart-items"></ul>
+</div>
+
+<!-- JavaScript to handle cart functionality -->
+<script>
+  // Retrieve cart items from localStorage
+  let cartItems = JSON.parse(localStorage.getItem('groserryCart')) || [];
+
+  // Function to delete an item from the cart
+  function deleteFromCart(index) {
+      cartItems.splice(index, 1); // Remove item at the specified index
+      localStorage.setItem('groserryCart', JSON.stringify(cartItems)); // Update localStorage
+      displayCartItems(); // Refresh cart items display
+  }
+
+  // Function to display cart items on the cart page
+  function displayCartItems() {
+      let cartList = document.getElementById('cart-items');
+      cartList.innerHTML = ''; // Clear previous items
+      cartItems.forEach((item, index) => {
+          let cartItemCard = document.createElement('div');
+          cartItemCard.classList.add('col', 'mb-3');
+          cartItemCard.innerHTML = `
+              <div class="card" style="transition:.5s">
+                  <div class="card-body">
+                      <h5 class="card-title">${item.productName}</h5>
+                      <p class="card-text">Price: ₹${item.price}</p>
+                      <button class="btn btn-danger" onclick="deleteFromCart(${index})">Remove</button>
+                      <button class="btn btn-success">Buy Now</button>
+                  </div>
+              </div>
+          `;
+          cartList.appendChild(cartItemCard);
+      });
+  }
+
+  // Call the displayCartItems function to initially display cart items
+  displayCartItems();
+</script>
+
+</body>
+</html>
